@@ -1,2 +1,2 @@
-*.exe
-*.tar.gz
+*.class
+__pycache__/
