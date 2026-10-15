@@ -1,0 +1,15 @@
+# GitHub's free runners have no GPU, so this uses Numba's CUDA *simulator*.
+# It checks correctness of Numba kernels only (slow, no CuPy, no timing).
+name: autograding
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      NUMBA_ENABLE_CUDASIM: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install numba pytest scipy numpy
+      - run: python -m pytest tests/test_module1.py -q
