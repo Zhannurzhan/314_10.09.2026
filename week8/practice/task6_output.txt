@@ -1,0 +1,25 @@
+================================================================
+ TASK 6 - Atomic CAS vs. Mutex Under Heavy Contention
+================================================================
+ Student ID      : 230109009
+ Logical cores   : 12
+ Threads         : 8 x 1,000,000 increments = 8,000,000 ops
+ Final counter   : 8,000,000 (verified for every primitive, every run)
+ Timing          : median of 5 runs
+----------------------------------------------------------------
+ Primitive 1: Mutex (ReentrantLock)
+   Execution time :     217.41 ms
+   Throughput     :      36,797,682 ops/sec
+----------------------------------------------------------------
+ Primitive 2: Atomic CAS (AtomicInteger.incrementAndGet)
+   Execution time :     149.02 ms
+   Throughput     :      53,685,474 ops/sec
+----------------------------------------------------------------
+ Throughput Ratio (CAS / Mutex) : 1.46x
+----------------------------------------------------------------
+ Supplementary: explicit get()+compareAndSet() retry loop
+   Execution time :     392.05 ms
+   Throughput     :      20,405,550 ops/sec
+   Failed CAS retries (last run): 1,617,987
+   Ratio vs Mutex : 0.55x
+================================================================
