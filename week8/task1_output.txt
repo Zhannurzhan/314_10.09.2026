@@ -1,0 +1,20 @@
+=======================================================
+TASK 1 - Hardware Probe & Serial Baseline
+=======================================================
+Student ID       : 230109009
+OS               : Windows 11 (10.0.26200)
+Platform         : Windows-11-10.0.26200-SP0
+CPU model        : 12th Gen Intel(R) Core(TM) i5-12450H
+Architecture     : AMD64
+Logical cores    : 12
+Python version   : 3.14.0
+NumPy version    : 2.3.5
+-------------------------------------------------------
+Array size       : 20,000,000 float64 elements (seed = 230109009)
+Generation time  : 86.38 ms
+-------------------------------------------------------
+Mode             : Serial (1 thread)
+Sum              : 9997335.631857
+Std deviation    : 0.2886622326
+Wall-clock time  : 162.52 ms
+=======================================================
