@@ -1,0 +1,27 @@
+==============================================================
+TASK 3 - Cache Line Contention (False Sharing)
+==============================================================
+Student ID         : 230109009
+OS                 : Windows 11 10.0
+Java version       : 21.0.2
+Logical cores      : 12
+Physical cores     : 8
+Threads used (N)   : 8
+Increments/thread  : 50,000,000
+Runs per version   : 5 (median reported)
+--------------------------------------------------------------
+Run 1: unpadded  12767.50 ms | padded   4318.34 ms | local   222.04 ms
+Run 2: unpadded  17330.59 ms | padded   3994.73 ms | local     7.61 ms
+Run 3: unpadded  13806.93 ms | padded   2580.38 ms | local     3.70 ms
+Run 4: unpadded  11817.17 ms | padded   2589.07 ms | local     3.22 ms
+Run 5: unpadded  14673.47 ms | padded   2440.20 ms | local     3.03 ms
+--------------------------------------------------------------
+Version                      |   Wall Time (ms) |      Ratio
+--------------------------------------------------------------
+Unpadded Shared (8 B apart)  |         13806.93 |      1.00x
+Padded (128 B apart)         |          2589.07 |      5.33x
+Local var, 1 write at end    |             3.70 |   3732.01x
+--------------------------------------------------------------
+Execution ratio Unpadded / Padded : 5.33x
+Execution ratio Unpadded / Local  : 3732.01x
+==============================================================
