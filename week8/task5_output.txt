@@ -1,0 +1,34 @@
+==========================================================================
+TASK 5 - The Overhead Crossover Point:  y[i] = a * x[i] + b
+==========================================================================
+Student ID       : 230109009
+OS               : Windows-11-10.0.26200-SP0
+Python / NumPy   : 3.14.0 / 2.3.5
+Logical cores    : 12  -> parallel version uses 12 threads
+a, b             : 2.5, 1.5
+Timing           : best of 7 rounds, each round >= 20 ms
+==========================================================================
+           N |       Serial |     Parallel |  Speedup | Result
+--------------------------------------------------------------------------
+         100 |      13.4 us |     812.2 us |    0.02x | parallel slower
+       1,000 |      14.8 us |   1,170.1 us |    0.01x | parallel slower
+      10,000 |      33.7 us |   1,409.2 us |    0.02x | parallel slower
+     100,000 |     187.2 us |     983.9 us |    0.19x | parallel slower
+   1,000,000 |   2,773.4 us |   3,738.8 us |    0.74x | parallel slower
+  10,000,000 |     28.84 ms |     28.51 ms |    1.01x | PARALLEL FASTER
+--------------------------------------------------------------------------
+RESULT: Multi-threading shifts from SLOWER to FASTER than serial
+        between N = 1,000,000 (slower) and N = 10,000,000 (faster).
+--------------------------------------------------------------------------
+Refining the tipping point between 1,000,000 and 10,000,000:
+           N |       Serial |     Parallel |  Speedup
+   3,162,278 |     11.02 ms |   9,220.3 us |    1.20x
+   1,778,280 |   5,662.8 us |   5,046.9 us |    1.12x
+   1,333,522 |   4,240.4 us |   3,615.6 us |    1.17x
+   1,154,782 |   3,883.7 us |   3,751.9 us |    1.04x
+   1,074,608 |   3,243.9 us |   3,218.0 us |    1.01x
+   1,036,633 |   3,798.9 us |   3,284.7 us |    1.16x
+--------------------------------------------------------------------------
+TIPPING POINT: parallel becomes faster at about N = 1,036,633
+               (slower at N = 1,000,000, faster at N = 1,036,633)
+==========================================================================
