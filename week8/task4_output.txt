@@ -1,0 +1,39 @@
+==============================================================================
+TASK 4 - Work Stealing & Scheduling Under Skew
+==============================================================================
+Student ID       : 230109009
+OS               : Windows-11-10.0.26200-SP0
+Python version   : 3.14.0
+Items            : 1000 (indices 0..999)
+Workers          : 4 threads (sleep releases the GIL)
+Repeats          : 5 per strategy (median run reported)
+Delta            : time between FIRST and LAST worker finishing
+==============================================================================
+Scenario: REQUIRED  cost(i) = sleep(0.0001 * (i % 20))
+Total work = 950.0 ms of sleep  ->  ideal time with 4 workers = 237.5 ms
+------------------------------------------------------------------------------
+Strategy                     |  Total ms | First done | Last done | Delta ms
+------------------------------------------------------------------------------
+A: Static blocks (250 each)  |     350.0 |      332.3 |     349.4 |     17.0
+B: Dynamic, chunk = 1        |     361.6 |      359.3 |     361.4 |      2.1
+B: Dynamic, chunk = 5        |     347.9 |      339.3 |     347.6 |      8.3
+------------------------------------------------------------------------------
+  A: Static blocks (250 each) -> W0:250 items @ 341 ms, W1:250 items @ 345 ms, W2:250 items @ 332 ms, W3:250 items @ 349 ms
+  B: Dynamic, chunk = 1      -> W0:248 items @ 360 ms, W1:246 items @ 361 ms, W2:248 items @ 361 ms, W3:258 items @ 359 ms
+  B: Dynamic, chunk = 5      -> W0:260 items @ 348 ms, W1:255 items @ 344 ms, W2:240 items @ 340 ms, W3:245 items @ 339 ms
+  Static / best dynamic (Dynamic, chunk = 5) = 1.01x
+==============================================================================
+Scenario: EXTRA     cost(i) = sleep(0.0001 * (i // 50))  (cost grows with i)
+Total work = 950.0 ms of sleep  ->  ideal time with 4 workers = 237.5 ms
+------------------------------------------------------------------------------
+Strategy                     |  Total ms | First done | Last done | Delta ms
+------------------------------------------------------------------------------
+A: Static blocks (250 each)  |     537.3 |      149.8 |     537.0 |    387.2
+B: Dynamic, chunk = 1        |     365.2 |      363.3 |     365.0 |      1.7
+B: Dynamic, chunk = 5        |     358.2 |      346.8 |     357.8 |     10.9
+------------------------------------------------------------------------------
+  A: Static blocks (250 each) -> W0:250 items @ 150 ms, W1:250 items @ 281 ms, W2:250 items @ 412 ms, W3:250 items @ 537 ms
+  B: Dynamic, chunk = 1      -> W0:237 items @ 365 ms, W1:288 items @ 363 ms, W2:235 items @ 364 ms, W3:240 items @ 365 ms
+  B: Dynamic, chunk = 5      -> W0:290 items @ 358 ms, W1:240 items @ 353 ms, W2:235 items @ 348 ms, W3:235 items @ 347 ms
+  Static / best dynamic (Dynamic, chunk = 5) = 1.50x
+==============================================================================
