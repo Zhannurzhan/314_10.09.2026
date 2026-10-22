@@ -1,0 +1,22 @@
+==============================================================
+TASK 2 - Multi-Core Scaling vs. Amdahl's Law
+==============================================================
+Student ID       : 230109009
+OS               : Windows-11-10.0.26200-SP0
+Logical cores    : 12
+Array size       : 20,000,000 float64 elements (seed = 230109009)
+Parallel model   : threads (ThreadPoolExecutor), NumPy releases the GIL
+Amdahl P         : 0.95
+Repeats per test : 5 (median time reported)
+--------------------------------------------------------------
+ Cores | Wall Time (ms) |  Speedup | Amdahl Upper Bound
+--------------------------------------------------------------
+     1 |          15.46 |    1.00x |              1.00x
+     2 |           9.04 |    1.71x |              1.90x
+     4 |           6.32 |    2.45x |              3.48x
+    12 |           5.82 |    2.66x |              7.74x
+    24 |           6.12 |    2.53x |             11.16x
+--------------------------------------------------------------
+Sum (check)      : 9997335.631857  (matches serial: 9997335.631857)
+Amdahl limit     : max speedup with infinite cores = 20x
+==============================================================
