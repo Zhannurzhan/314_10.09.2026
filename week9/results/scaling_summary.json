@@ -1,0 +1,86 @@
+{
+  "generated_at_utc": "2026-10-29T08:00:10+00:00",
+  "student_id": "30109009",
+  "kernel": "5-point Jacobi stencil, float64, NumPy row-block decomposition",
+  "N": 1280,
+  "sweeps": 100,
+  "repeats": 3,
+  "statistic": "median",
+  "process_counts": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "strong_scaling": {
+    "T1_s": 1.003605,
+    "per_P": {
+      "1": {
+        "speedup": 1.0,
+        "efficiency_pct": 100.0,
+        "serial_fraction": null
+      },
+      "2": {
+        "speedup": 1.741,
+        "efficiency_pct": 87.05,
+        "serial_fraction": 0.14877
+      },
+      "4": {
+        "speedup": 2.0101,
+        "efficiency_pct": 50.25,
+        "serial_fraction": 0.32997
+      },
+      "8": {
+        "speedup": 2.5041,
+        "efficiency_pct": 31.3,
+        "serial_fraction": 0.31354
+      }
+    },
+    "amdahl_fit": {
+      "method": "least squares of 1/S - 1/P = s (1 - 1/P) over P > 1",
+      "serial_fraction_s": 0.29329,
+      "max_speedup_S_max": 3.41,
+      "note": null
+    },
+    "results_identical_to_serial": true
+  },
+  "weak_scaling": {
+    "rule": "N_P = ceil(N * sqrt(P)), work ~ O(P)",
+    "per_P": {
+      "1": {
+        "N_P": 1280,
+        "time_s": 1.003605,
+        "scaled_speedup": 1.0,
+        "efficiency_pct": 100.0,
+        "gustafson_serial_fraction": null
+      },
+      "2": {
+        "N_P": 1811,
+        "time_s": 1.558517,
+        "scaled_speedup": 0.6428,
+        "efficiency_pct": 32.14,
+        "gustafson_serial_fraction": 1.35721
+      },
+      "4": {
+        "N_P": 2560,
+        "time_s": 3.560797,
+        "scaled_speedup": 0.2814,
+        "efficiency_pct": 7.04,
+        "gustafson_serial_fraction": 1.23953
+      },
+      "8": {
+        "N_P": 3621,
+        "time_s": 8.226245,
+        "scaled_speedup": 0.1217,
+        "efficiency_pct": 1.52,
+        "gustafson_serial_fraction": 1.12547
+      }
+    }
+  },
+  "contrast": {
+    "P": 8,
+    "strong_efficiency_pct": 31.3,
+    "weak_efficiency_pct": 1.52,
+    "statement": "At P=8, strong scaling reaches 2.50x (31.3% efficiency) on the fixed N=1280 grid, while weak scaling delivers a scaled speedup of 0.12x (1.5% efficiency) when the grid grows to N=3621."
+  }
+}

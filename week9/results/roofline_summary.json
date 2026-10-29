@@ -1,0 +1,81 @@
+{
+  "generated_at_utc": "2026-10-29T08:00:12+00:00",
+  "kernel": {
+    "name": "5-point Jacobi stencil (float64)",
+    "update": "v[i,j] = 0.25*(u[i-1,j] + u[i+1,j] + u[i,j-1] + u[i,j+1])",
+    "flops_per_point": 4,
+    "flop_breakdown": "3 additions + 1 multiplication"
+  },
+  "arithmetic_intensity": {
+    "theoretical_flop_per_byte": 0.1667,
+    "theoretical_bytes_per_point": 24,
+    "theoretical_assumptions": "perfect reuse of the 3-row neighbourhood in cache: u read once (8 B), v written once (8 B) plus its write-allocate read (8 B)",
+    "streaming_stores_flop_per_byte": 0.25,
+    "as_implemented_flop_per_byte": 0.0417,
+    "as_implemented_bytes_per_point": 96,
+    "as_implemented_note": "NumPy evaluates the update in 4 passes through a temporary (add, add, add, scale), each streaming ~24 B per point when the block exceeds cache"
+  },
+  "machine": {
+    "cpu": "12th Gen Intel(R) Core(TM) i5-12450H",
+    "microarchitecture": "Alder Lake",
+    "physical_cores": 8,
+    "base_frequency_ghz": 2.0,
+    "fp64_flops_per_cycle_per_core": 16,
+    "flops_per_cycle_source": "AVX2: 2 FMA units x 4 doubles x 2 FLOPs",
+    "peak_fp64_gflops": 256.0,
+    "caches_bytes": {
+      "L1d_per_core": 49152,
+      "L2_per_instance": 2097152,
+      "L2_total": 7340032,
+      "L3_total": 12582912
+    },
+    "cache_line_bytes": 64,
+    "peak_memory_bandwidth_theoretical": {
+      "gbs": 51.2,
+      "transfer_rate_mts": 3200,
+      "bus_width_bits": 64,
+      "modules": 2,
+      "channels_assumed": 2,
+      "total_capacity_bytes": 17179869184,
+      "source": "WMI Win32_PhysicalMemory; estimate assumes one 64-bit channel per module, at most 2 (consumer dual channel). Override with --peak-bw-gbs."
+    },
+    "memory_bandwidth_measured": {
+      "kernel": "STREAM Add c = a + b, 24 B per element",
+      "single_process": {
+        "processes": 1,
+        "elements_per_process": 2097152,
+        "aggregate_bytes_per_rep": 50331648,
+        "best_gbs": 19.02,
+        "median_gbs": 17.76
+      },
+      "all_physical_cores": {
+        "processes": 8,
+        "elements_per_process": 1048576,
+        "aggregate_bytes_per_rep": 201326592,
+        "best_gbs": 31.95,
+        "median_gbs": 31.39
+      }
+    }
+  },
+  "roofline": {
+    "ridge_point_theoretical_flop_per_byte": 5.0,
+    "ridge_point_measured_bw_flop_per_byte": 8.01,
+    "bandwidth_ceiling_used_gbs": 51.2,
+    "attainable_gflops_at_theoretical_ai": 8.53,
+    "achieved": {
+      "best_P": 8,
+      "gflops": 1.63,
+      "implied_dram_traffic_gbs_as_implemented": 39.12,
+      "fraction_of_measured_all_core_bandwidth": 1.224,
+      "fraction_of_peak_flops": 0.0064
+    }
+  },
+  "working_set": {
+    "strong_N": 1280,
+    "bytes": 39321600,
+    "fits_in_L3": false,
+    "per_worker_bytes_at_max_P": 4915200
+  },
+  "regime": "Memory-Bandwidth Bound",
+  "conclusion": "The stencil performs 4 FLOPs per 24 bytes (AI = 0.167 FLOP/B; 0.042 FLOP/B as implemented in NumPy). The machine balance (ridge point) is 5.0 FLOP/B, about 30x higher, so the kernel is memory-bandwidth bound: attainable performance is capped near AI x bandwidth = 8.5 GFLOP/s, far below the 256 GFLOP/s compute peak. The strong-scaling working set (37.5 MiB) exceeds L3 (12.0 MiB), so every sweep streams from DRAM. Adding cores helps only until the shared memory bandwidth saturates, which also limits strong-scaling efficiency."
+}
