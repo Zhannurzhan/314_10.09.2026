@@ -1,0 +1,55 @@
+{
+  "task": "1.2 loop interchange (i-j-k vs i-k-j)",
+  "generated_at_utc": "2026-10-29T07:34:59+00:00",
+  "student_id": "30109009",
+  "N": 1280,
+  "M": 640,
+  "leading_dimension": 1280,
+  "seed": 27804,
+  "dtype": "float64",
+  "layout": "flat row-major 1D buffer",
+  "engine": "numba 0.63.1 (njit, fastmath=False)",
+  "runs": 3,
+  "statistic": "median",
+  "naive_ijk": {
+    "times_s": [
+      0.63132,
+      0.733472,
+      0.682666
+    ],
+    "median_s": 0.682666,
+    "gflops": 0.768
+  },
+  "interchanged_ikj": {
+    "times_s": [
+      0.371263,
+      0.330636,
+      0.399268
+    ],
+    "median_s": 0.371263,
+    "gflops": 1.4122
+  },
+  "speedup": 1.839,
+  "speedup_definition": "S = T_naive / T_interchanged (median wall-clock)",
+  "verification": {
+    "reference": "numpy A[:M,:M] @ B[:M,:M]",
+    "max_abs_error_naive": 6.536993168992922e-13,
+    "max_abs_error_interchanged": 6.536993168992922e-13,
+    "tolerance": 6.4e-07,
+    "passed": true
+  },
+  "column_walk_analysis": {
+    "b_column_stride_elements": 1280,
+    "b_column_stride_bytes": 10240,
+    "cache_lines_per_column_walk": 640,
+    "column_walk_footprint_bytes": 40960,
+    "l1d_bytes": 49152,
+    "l1d_associativity": 12,
+    "l1d_sets": 64,
+    "l1d_sets_used_by_column": 2,
+    "l1d_lines_available_to_column": 24,
+    "column_fits_in_l1d": false
+  },
+  "host_fingerprint": "6beddbe43b6f0e31",
+  "cpu": "12th Gen Intel(R) Core(TM) i5-12450H"
+}

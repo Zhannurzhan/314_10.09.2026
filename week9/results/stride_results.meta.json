@@ -1,0 +1,32 @@
+{
+  "task": "1.1 stride latency cliff",
+  "generated_at_utc": "2026-10-29T07:34:49+00:00",
+  "engine": "numpy 2.3.5",
+  "elements": 16777216,
+  "array_bytes": 134217728,
+  "element_bytes": 8,
+  "cache_line_bytes": 64,
+  "strides": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128
+  ],
+  "warmup_iterations": 5,
+  "recorded_iterations": 5,
+  "statistic": "median",
+  "timer": "time.perf_counter_ns",
+  "eviction_buffer_bytes": 67108864,
+  "eviction_source": "4 x LLC total from host_profile.json (64 MiB-1 GiB)",
+  "high_priority": true,
+  "cliff_ratio_stride8_vs_stride1": 5.094,
+  "student_id": "30109009",
+  "host_fingerprint": "6beddbe43b6f0e31",
+  "cpu": "12th Gen Intel(R) Core(TM) i5-12450H",
+  "python": "3.14.0",
+  "numpy": "2.3.5"
+}
