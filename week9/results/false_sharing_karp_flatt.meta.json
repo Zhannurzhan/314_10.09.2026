@@ -1,0 +1,36 @@
+{
+  "tasks": "2.1-2.3 false sharing, padding/privatization, Karp-Flatt",
+  "generated_at_utc": "2026-10-29T07:50:57+00:00",
+  "iterations_per_worker_K": 5000000,
+  "scaling": "weak",
+  "speedup_definition": "S_P = P*T_1/T_P (each worker does K increments)",
+  "karp_flatt": "e(P) = (1/S_P - 1/P) / (1 - 1/P)",
+  "repeats": 3,
+  "statistic": "median",
+  "timing": "max(worker end) - min(worker start), after a start barrier",
+  "start_method": "spawn",
+  "shared_memory": "multiprocessing.Array(ctypes.c_int64, n, lock=False), cache-line aligned",
+  "cache_line_bytes": 64,
+  "physical_cores": 8,
+  "logical_cpus": 12,
+  "karp_flatt_by_variant": {
+    "unpadded": {
+      "2": -0.0472,
+      "4": 0.1704,
+      "8": 0.215
+    },
+    "padded": {
+      "2": -0.1278,
+      "4": -0.0272,
+      "8": 0.0514
+    },
+    "privatized": {
+      "2": -0.2183,
+      "4": -0.0543,
+      "8": 0.0577
+    }
+  },
+  "host_fingerprint": "6beddbe43b6f0e31",
+  "cpu": "12th Gen Intel(R) Core(TM) i5-12450H",
+  "python": "3.14.0"
+}
