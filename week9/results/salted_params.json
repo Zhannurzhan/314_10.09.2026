@@ -1,0 +1,10 @@
+{
+  "student_id": "30109009",
+  "N": 1280,
+  "buffer_elements": 16777216,
+  "seed": 27804,
+  "matrix_bytes_fp64": 13107200,
+  "buffer_bytes_fp64": 134217728,
+  "host_fingerprint": "6beddbe43b6f0e31",
+  "generated_at_utc": "2026-10-29T07:27:05+00:00"
+}

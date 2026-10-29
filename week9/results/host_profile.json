@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-10-29T07:27:05+00:00",
+  "cpu": {
+    "model_name": "12th Gen Intel(R) Core(TM) i5-12450H",
+    "vendor": "Intel",
+    "cpuid": {
+      "family": 6,
+      "model": 154,
+      "stepping": 3,
+      "vendor_id": "GenuineIntel"
+    },
+    "microarchitecture": "Alder Lake",
+    "base_frequency_mhz": 2000.0,
+    "base_frequency_source": "WMI Win32_Processor.MaxClockSpeed",
+    "max_frequency_mhz": null,
+    "sockets": 1,
+    "physical_cores": 8,
+    "logical_processors": 12,
+    "threads_per_core": 1.5,
+    "smt_enabled": true,
+    "smt_capable_cores": 4,
+    "hybrid_core_types": [
+      {
+        "efficiency_class": 1,
+        "cores": 4,
+        "threads": 8
+      },
+      {
+        "efficiency_class": 0,
+        "cores": 4,
+        "threads": 4
+      }
+    ],
+    "topology_source": "Win32 GetLogicalProcessorInformationEx"
+  },
+  "cache_summary": {
+    "l1d_bytes": 49152,
+    "l2_bytes": 2097152,
+    "l3_bytes": 12582912,
+    "l3_total_bytes": 12582912,
+    "cache_line_bytes": 64,
+    "cache_line_source": "detected",
+    "note": "Sizes are per instance (per core / per cluster / per L3 slice group)."
+  },
+  "caches": {
+    "L1d": {
+      "size_bytes": 49152,
+      "size_human": "48 KiB",
+      "line_size_bytes": 64,
+      "associativity": 12,
+      "logical_cpus_sharing": 2,
+      "instances": 8,
+      "total_bytes": 327680,
+      "total_human": "320 KiB",
+      "heterogeneous": true,
+      "variants": [
+        {
+          "size_bytes": 49152,
+          "size_human": "48 KiB",
+          "line_size_bytes": 64,
+          "associativity": 12,
+          "logical_cpus_sharing": 2,
+          "instances": 4
+        },
+        {
+          "size_bytes": 32768,
+          "size_human": "32 KiB",
+          "line_size_bytes": 64,
+          "associativity": 8,
+          "logical_cpus_sharing": 1,
+          "instances": 4
+        }
+      ]
+    },
+    "L1i": {
+      "size_bytes": 65536,
+      "size_human": "64 KiB",
+      "line_size_bytes": 64,
+      "associativity": 8,
+      "logical_cpus_sharing": 1,
+      "instances": 8,
+      "total_bytes": 393216,
+      "total_human": "384 KiB",
+      "heterogeneous": true,
+      "variants": [
+        {
+          "size_bytes": 65536,
+          "size_human": "64 KiB",
+          "line_size_bytes": 64,
+          "associativity": 8,
+          "logical_cpus_sharing": 1,
+          "instances": 4
+        },
+        {
+          "size_bytes": 32768,
+          "size_human": "32 KiB",
+          "line_size_bytes": 64,
+          "associativity": 8,
+          "logical_cpus_sharing": 2,
+          "instances": 4
+        }
+      ]
+    },
+    "L2": {
+      "size_bytes": 2097152,
+      "size_human": "2 MiB",
+      "line_size_bytes": 64,
+      "associativity": 16,
+      "logical_cpus_sharing": 4,
+      "instances": 5,
+      "total_bytes": 7340032,
+      "total_human": "7 MiB",
+      "heterogeneous": true,
+      "variants": [
+        {
+          "size_bytes": 2097152,
+          "size_human": "2 MiB",
+          "line_size_bytes": 64,
+          "associativity": 16,
+          "logical_cpus_sharing": 4,
+          "instances": 1
+        },
+        {
+          "size_bytes": 1310720,
+          "size_human": "1.25 MiB",
+          "line_size_bytes": 64,
+          "associativity": 10,
+          "logical_cpus_sharing": 2,
+          "instances": 4
+        }
+      ]
+    },
+    "L3": {
+      "size_bytes": 12582912,
+      "size_human": "12 MiB",
+      "line_size_bytes": 64,
+      "associativity": 8,
+      "logical_cpus_sharing": 12,
+      "instances": 1,
+      "total_bytes": 12582912,
+      "total_human": "12 MiB",
+      "heterogeneous": false
+    }
+  },
+  "memory": {
+    "total_bytes": 16831901696,
+    "total_human": "16052.2 MiB"
+  },
+  "os": {
+    "system": "Windows",
+    "release": "11",
+    "version": "10.0.26200",
+    "kernel_version": "10.0.26200.9711",
+    "machine": "AMD64",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "product": "Windows 11",
+    "build": 26200,
+    "display_version": "25H2",
+    "edition": "Professional"
+  },
+  "python": {
+    "implementation": "CPython",
+    "version": "3.14.0",
+    "version_full": "3.14.0 (tags/v3.14.0:ebf955d, Oct  7 2025, 10:15:03) [MSC v.1944 64 bit (AMD64)]",
+    "compiler": "MSC v.1944 64 bit (AMD64)",
+    "build": [
+      "tags/v3.14.0:ebf955d",
+      "Oct  7 2025 10:15:03"
+    ],
+    "cache_tag": "cpython-314",
+    "executable": "C:\\Python314\\python.exe",
+    "pointer_bits": 64,
+    "byteorder": "little",
+    "gil_enabled": true,
+    "packages": {
+      "numpy": "2.3.5",
+      "scipy": "1.16.3",
+      "psutil": "7.2.2",
+      "py-cpuinfo": null,
+      "numba": "0.63.1"
+    }
+  },
+  "warnings": [],
+  "fingerprint": {
+    "sha256": "6beddbe43b6f0e3162b4757aa953302a3e9cd30721ff4d7cb0fa547644a76f12",
+    "salt": "6beddbe43b6f0e31",
+    "basis": {
+      "cpu": [
+        "12th Gen Intel(R) Core(TM) i5-12450H",
+        "Alder Lake",
+        8,
+        12
+      ],
+      "cache": [
+        49152,
+        2097152,
+        12582912,
+        64
+      ],
+      "os": [
+        "Windows",
+        "10.0.26200.9711"
+      ],
+      "python": [
+        "CPython",
+        "3.14.0"
+      ]
+    }
+  }
+}
