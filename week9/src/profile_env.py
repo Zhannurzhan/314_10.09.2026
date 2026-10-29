@@ -786,6 +786,19 @@ def build_profile() -> dict:
     profile = {
         "schema_version": SCHEMA_VERSION,
         "generated_at_utc": _dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds"),
+        # Flat summary keys (read by verify_outputs.py); details follow below.
+        "cpu_model": cpu_out["model_name"],
+        "microarchitecture": cpu_out["microarchitecture"],
+        "base_frequency_mhz": cpu_out["base_frequency_mhz"],
+        "physical_cores": physical,
+        "logical_threads": logical,
+        "smt_enabled": smt_enabled,
+        "l1d_cache_bytes": size("L1d"),
+        "l2_cache_bytes": size("L2"),
+        "l3_cache_bytes": size("L3"),
+        "cache_line_bytes": line_size,
+        "kernel_version": None,          # filled in below from os_info
+        "python_implementation": f"{platform.python_implementation()} {platform.python_version()}",
         "cpu": cpu_out,
         "cache_summary": {
             "l1d_bytes": size("L1d"),
@@ -803,6 +816,7 @@ def build_profile() -> dict:
         "warnings": warnings,
     }
     profile["memory"]["total_human"] = _human_bytes(profile["memory"]["total_bytes"])
+    profile["kernel_version"] = profile["os"]["kernel_version"]
 
     # Stable host fingerprint -- usable later as the salt for problem parameters.
     basis = {

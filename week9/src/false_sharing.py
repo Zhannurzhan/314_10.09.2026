@@ -119,7 +119,8 @@ def _aligned_base(arr, line_bytes: int) -> int:
     return ((line_bytes - misalign) % line_bytes) // INT64
 
 
-def run_once(ctx, variant: str, P: int, iters: int, line_bytes: int) -> float:
+def run_once(ctx, variant: str, P: int, iters: int, line_bytes: int) -> tuple[float, int]:
+    """Return (elapsed seconds, total of all counters)."""
     line_elems = line_bytes // INT64                     # 8 for 64-byte lines
     used = P * line_elems if variant == "padded" else max(P, line_elems)
     # One spare line before (for alignment) and after (guard).
@@ -158,7 +159,7 @@ def run_once(ctx, variant: str, P: int, iters: int, line_bytes: int) -> float:
             raise RuntimeError(f"{variant} P={P}: shared_arr[{i}] = {shared_arr[i]}, expected {want}")
 
     starts, ends = times[0::2], times[1::2]
-    return (max(ends) - min(starts)) / 1e9
+    return (max(ends) - min(starts)) / 1e9, sum(shared_arr[i] for i in expected)
 
 
 def karp_flatt(speedup: float, P: int) -> float | None:
@@ -174,12 +175,13 @@ def _load_json(path: Path) -> dict:
         return {}
 
 
-TSV_COLUMNS = [
-    "variant", "P", "scaling", "iterations_per_worker", "total_increments",
-    "median_time_s", "min_time_s", "max_time_s", "samples_s",
-    "ns_per_increment_per_worker", "throughput_Mincr_per_s",
-    "time_ratio_vs_P1", "speedup", "efficiency", "karp_flatt_e", "oversubscribed",
-]
+# One row per P; for each variant v: t_v_s (median), samples_v_s, speedup_v,
+# efficiency_v, e_v (Karp-Flatt), total_count_v (sum of all counters).
+TSV_COLUMNS = ["P", "scaling", "iterations_per_worker", "expected_total_count"]
+for _v in VARIANTS:
+    TSV_COLUMNS += [f"t_{_v}_s", f"samples_{_v}_s", f"speedup_{_v}",
+                    f"efficiency_{_v}", f"e_{_v}", f"total_count_{_v}"]
+TSV_COLUMNS += ["oversubscribed"]
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -211,38 +213,44 @@ def main(argv: list[str] | None = None) -> int:
               "those runs are oversubscribed")
 
     results: dict[tuple[str, int], list[float]] = {}
+    counts: dict[tuple[str, int], int] = {}
     for variant in VARIANTS:
         for P in args.processes:
             iters = K if args.scaling == "weak" else K // P
-            samples = [run_once(ctx, variant, P, iters, line_bytes) for _ in range(args.repeats)]
+            runs = [run_once(ctx, variant, P, iters, line_bytes) for _ in range(args.repeats)]
+            samples = [t for t, _ in runs]
+            totals = {c for _, c in runs}
+            if totals != {P * iters}:
+                raise RuntimeError(f"{variant} P={P}: counter totals {totals} != {P * iters}")
             results[(variant, P)] = samples
+            counts[(variant, P)] = P * iters
             print(f"  {variant:<10} P={P}: median {statistics.median(samples):7.3f} s  "
-                  f"(runs: {', '.join(f'{s:.3f}' for s in samples)})", flush=True)
+                  f"(runs: {', '.join(f'{s:.3f}' for s in samples)}; total count "
+                  f"{P * iters:,})", flush=True)
 
+    e_values: dict[tuple[str, int], float | None] = {}
     rows = []
-    for variant in VARIANTS:
-        t1 = statistics.median(results[(variant, 1)])
-        for P in args.processes:
+    for P in args.processes:
+        iters = K if args.scaling == "weak" else K // P
+        row = {"P": P, "scaling": args.scaling, "iterations_per_worker": iters,
+               "expected_total_count": P * iters,
+               "oversubscribed": str(P > (physical or logical)).lower()}
+        for variant in VARIANTS:
             samples = results[(variant, P)]
+            t1 = statistics.median(results[(variant, 1)])
             tp = statistics.median(samples)
-            iters = K if args.scaling == "weak" else K // P
-            total = iters * P
             speedup = (P * t1 / tp) if args.scaling == "weak" else (t1 / tp)
             e = karp_flatt(speedup, P)
-            rows.append({
-                "variant": variant, "P": P, "scaling": args.scaling,
-                "iterations_per_worker": iters, "total_increments": total,
-                "median_time_s": f"{tp:.6f}", "min_time_s": f"{min(samples):.6f}",
-                "max_time_s": f"{max(samples):.6f}",
-                "samples_s": ",".join(f"{s:.6f}" for s in samples),
-                "ns_per_increment_per_worker": f"{tp * 1e9 / iters:.2f}",
-                "throughput_Mincr_per_s": f"{total / tp / 1e6:.3f}",
-                "time_ratio_vs_P1": f"{tp / t1:.3f}",
-                "speedup": f"{speedup:.4f}",
-                "efficiency": f"{speedup / P:.4f}",
-                "karp_flatt_e": "" if e is None else f"{e:.4f}",
-                "oversubscribed": str(P > (physical or logical)).lower(),
+            e_values[(variant, P)] = e
+            row.update({
+                f"t_{variant}_s": f"{tp:.6f}",
+                f"samples_{variant}_s": ",".join(f"{s:.6f}" for s in samples),
+                f"speedup_{variant}": f"{speedup:.4f}",
+                f"efficiency_{variant}": f"{speedup / P:.4f}",
+                f"e_{variant}": "" if e is None else f"{e:.4f}",
+                f"total_count_{variant}": counts[(variant, P)],
             })
+        rows.append(row)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("w", newline="", encoding="utf-8") as fh:
@@ -250,15 +258,16 @@ def main(argv: list[str] | None = None) -> int:
         writer.writeheader()
         writer.writerows(rows)
 
-    print(f"\n{'variant':<11}{'P':>3}{'median s':>10}{'T_P/T_1':>9}{'speedup':>9}{'e(P)':>9}")
+    header = f"{'P':>3}" + "".join(f"{v + ' s':>15}{'e(P)':>8}" for v in VARIANTS)
+    print("\n" + header)
     for r in rows:
-        print(f"{r['variant']:<11}{r['P']:>3}{float(r['median_time_s']):>10.3f}"
-              f"{float(r['time_ratio_vs_P1']):>9.2f}{float(r['speedup']):>9.2f}"
-              f"{r['karp_flatt_e'] or '-':>9}")
+        line = f"{r['P']:>3}"
+        for v in VARIANTS:
+            line += f"{float(r[f't_{v}_s']):>15.3f}{(r[f'e_{v}'] or '-'):>8}"
+        print(line)
 
     def e_of(variant, P):
-        v = next(r["karp_flatt_e"] for r in rows if r["variant"] == variant and r["P"] == P)
-        return float(v) if v else None
+        return e_values.get((variant, P))
 
     p_max = max(args.processes)
     summary = {v: {str(P): e_of(v, P) for P in args.processes if P > 1} for v in VARIANTS}

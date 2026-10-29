@@ -1,6 +1,6 @@
 {
   "task": "1.1 stride latency cliff",
-  "generated_at_utc": "2026-10-29T07:34:49+00:00",
+  "generated_at_utc": "2026-10-29T08:04:51+00:00",
   "engine": "numpy 2.3.5",
   "elements": 16777216,
   "array_bytes": 134217728,
@@ -23,7 +23,7 @@
   "eviction_buffer_bytes": 67108864,
   "eviction_source": "4 x LLC total from host_profile.json (64 MiB-1 GiB)",
   "high_priority": true,
-  "cliff_ratio_stride8_vs_stride1": 5.094,
+  "cliff_ratio_stride8_vs_stride1": 3.352,
   "student_id": "30109009",
   "host_fingerprint": "6beddbe43b6f0e31",
   "cpu": "12th Gen Intel(R) Core(TM) i5-12450H",

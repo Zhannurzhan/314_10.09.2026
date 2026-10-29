@@ -1,6 +1,6 @@
 {
   "task": "1.2 loop interchange (i-j-k vs i-k-j)",
-  "generated_at_utc": "2026-10-29T07:34:59+00:00",
+  "generated_at_utc": "2026-10-29T08:04:57+00:00",
   "student_id": "30109009",
   "N": 1280,
   "M": 640,
@@ -13,23 +13,25 @@
   "statistic": "median",
   "naive_ijk": {
     "times_s": [
-      0.63132,
-      0.733472,
-      0.682666
+      0.558331,
+      0.621425,
+      0.498559
     ],
-    "median_s": 0.682666,
-    "gflops": 0.768
+    "median_s": 0.558331,
+    "gflops": 0.939
   },
   "interchanged_ikj": {
     "times_s": [
-      0.371263,
-      0.330636,
-      0.399268
+      0.414886,
+      0.312003,
+      0.330607
     ],
-    "median_s": 0.371263,
-    "gflops": 1.4122
+    "median_s": 0.330607,
+    "gflops": 1.5858
   },
-  "speedup": 1.839,
+  "naive_time_s": 0.558331,
+  "interchanged_time_s": 0.330607,
+  "speedup": 1.689,
   "speedup_definition": "S = T_naive / T_interchanged (median wall-clock)",
   "verification": {
     "reference": "numpy A[:M,:M] @ B[:M,:M]",

@@ -1,12 +1,14 @@
 {
-  "generated_at_utc": "2026-10-29T08:00:12+00:00",
+  "generated_at_utc": "2026-10-29T08:06:06+00:00",
   "kernel": {
     "name": "5-point Jacobi stencil (float64)",
     "update": "v[i,j] = 0.25*(u[i-1,j] + u[i+1,j] + u[i,j-1] + u[i,j+1])",
     "flops_per_point": 4,
     "flop_breakdown": "3 additions + 1 multiplication"
   },
-  "arithmetic_intensity": {
+  "arithmetic_intensity": 0.1667,
+  "arithmetic_intensity_units": "FLOP/byte",
+  "arithmetic_intensity_details": {
     "theoretical_flop_per_byte": 0.1667,
     "theoretical_bytes_per_point": 24,
     "theoretical_assumptions": "perfect reuse of the 3-row neighbourhood in cache: u read once (8 B), v written once (8 B) plus its write-allocate read (8 B)",
@@ -45,29 +47,29 @@
         "processes": 1,
         "elements_per_process": 2097152,
         "aggregate_bytes_per_rep": 50331648,
-        "best_gbs": 19.02,
-        "median_gbs": 17.76
+        "best_gbs": 22.97,
+        "median_gbs": 21.79
       },
       "all_physical_cores": {
         "processes": 8,
         "elements_per_process": 1048576,
         "aggregate_bytes_per_rep": 201326592,
-        "best_gbs": 31.95,
-        "median_gbs": 31.39
+        "best_gbs": 32.17,
+        "median_gbs": 31.71
       }
     }
   },
   "roofline": {
     "ridge_point_theoretical_flop_per_byte": 5.0,
-    "ridge_point_measured_bw_flop_per_byte": 8.01,
+    "ridge_point_measured_bw_flop_per_byte": 7.96,
     "bandwidth_ceiling_used_gbs": 51.2,
     "attainable_gflops_at_theoretical_ai": 8.53,
     "achieved": {
-      "best_P": 8,
-      "gflops": 1.63,
-      "implied_dram_traffic_gbs_as_implemented": 39.12,
-      "fraction_of_measured_all_core_bandwidth": 1.224,
-      "fraction_of_peak_flops": 0.0064
+      "best_P": 4,
+      "gflops": 1.853,
+      "implied_dram_traffic_gbs_as_implemented": 44.48,
+      "fraction_of_measured_all_core_bandwidth": 1.383,
+      "fraction_of_peak_flops": 0.0072
     }
   },
   "working_set": {

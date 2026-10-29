@@ -548,7 +548,9 @@ def main(argv: list[str] | None = None) -> int:
                 "flops_per_point": FLOPS_PER_POINT,
                 "flop_breakdown": "3 additions + 1 multiplication",
             },
-            "arithmetic_intensity": {
+            "arithmetic_intensity": round(ai_ideal, 4),
+            "arithmetic_intensity_units": "FLOP/byte",
+            "arithmetic_intensity_details": {
                 "theoretical_flop_per_byte": round(ai_ideal, 4),
                 "theoretical_bytes_per_point": BYTES_PER_POINT_IDEAL,
                 "theoretical_assumptions": ("perfect reuse of the 3-row neighbourhood in cache: "

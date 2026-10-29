@@ -1,6 +1,6 @@
 {
   "tasks": "2.1-2.3 false sharing, padding/privatization, Karp-Flatt",
-  "generated_at_utc": "2026-10-29T07:50:57+00:00",
+  "generated_at_utc": "2026-10-29T08:05:31+00:00",
   "iterations_per_worker_K": 5000000,
   "scaling": "weak",
   "speedup_definition": "S_P = P*T_1/T_P (each worker does K increments)",
@@ -15,19 +15,19 @@
   "logical_cpus": 12,
   "karp_flatt_by_variant": {
     "unpadded": {
-      "2": -0.0472,
-      "4": 0.1704,
-      "8": 0.215
+      "2": -0.049952280736957566,
+      "4": 0.17679415951531632,
+      "8": 0.23050843209797187
     },
     "padded": {
-      "2": -0.1278,
-      "4": -0.0272,
-      "8": 0.0514
+      "2": -0.026084126670343877,
+      "4": 0.03479173218394734,
+      "8": 0.06720301186145912
     },
     "privatized": {
-      "2": -0.2183,
-      "4": -0.0543,
-      "8": 0.0577
+      "2": -0.05208581002469559,
+      "4": -0.027526013845167025,
+      "8": 0.0981761588198291
     }
   },
   "host_fingerprint": "6beddbe43b6f0e31",

@@ -171,7 +171,7 @@ def run_benchmark(kernel, data: np.ndarray, strides, line_bytes: int,
             "median_time_ns": int(median_ns),
             "min_time_ns": min(samples),
             "max_time_ns": max(samples),
-            "latency_per_element_ns": median_ns / touched,
+            "latency_ns": median_ns / touched,
             "time_per_cache_line_ns": median_ns / lines,
             "dram_bandwidth_gbps": lines * line_bytes / median_ns,       # bytes/ns == GB/s
             "useful_bandwidth_gbps": touched * ELEMENT_BYTES / median_ns,
@@ -180,16 +180,16 @@ def run_benchmark(kernel, data: np.ndarray, strides, line_bytes: int,
         print(f"  stride {s:>3}: median {median_ns / 1e6:9.3f} ms, "
               f"{median_ns / touched:7.3f} ns/element", flush=True)
 
-    base = rows[0]["latency_per_element_ns"]
+    base = rows[0]["latency_ns"]
     for row in rows:
-        row["slowdown_vs_stride1"] = row["latency_per_element_ns"] / base
+        row["slowdown_vs_stride1"] = row["latency_ns"] / base
     return rows
 
 
 TSV_COLUMNS = [
     "stride", "stride_bytes", "elements_touched", "cache_lines_touched",
     "median_time_ns", "min_time_ns", "max_time_ns",
-    "latency_per_element_ns", "time_per_cache_line_ns", "slowdown_vs_stride1",
+    "latency_ns", "time_per_cache_line_ns", "slowdown_vs_stride1",
     "dram_bandwidth_gbps", "useful_bandwidth_gbps", "samples_ns",
 ]
 
@@ -202,7 +202,7 @@ def write_tsv(rows: list[dict], path: Path) -> None:
         writer.writeheader()
         for row in rows:
             out = dict(row)
-            for key in ("latency_per_element_ns", "time_per_cache_line_ns",
+            for key in ("latency_ns", "time_per_cache_line_ns",
                         "slowdown_vs_stride1", "dram_bandwidth_gbps",
                         "useful_bandwidth_gbps"):
                 out[key] = f"{row[key]:.4f}"
@@ -250,13 +250,13 @@ def main(argv: list[str] | None = None) -> int:
     write_tsv(rows, args.output)
 
     by_stride = {r["stride"]: r for r in rows}
-    cliff = by_stride[8]["latency_per_element_ns"] / by_stride[1]["latency_per_element_ns"]
+    cliff = by_stride[8]["latency_ns"] / by_stride[1]["latency_ns"]
     print()
     print(f"{'stride':>6} {'bytes':>6} {'touched':>10} {'median ms':>10} "
           f"{'ns/elem':>8} {'x s=1':>6} {'GB/s DRAM':>9}")
     for r in rows:
         print(f"{r['stride']:>6} {r['stride_bytes']:>6} {r['elements_touched']:>10,} "
-              f"{r['median_time_ns'] / 1e6:>10.3f} {r['latency_per_element_ns']:>8.3f} "
+              f"{r['median_time_ns'] / 1e6:>10.3f} {r['latency_ns']:>8.3f} "
               f"{r['slowdown_vs_stride1']:>6.2f} {r['dram_bandwidth_gbps']:>9.2f}")
     print(f"\nCache-line cliff: stride 8 costs {cliff:.1f}x more per element than "
           f"stride 1 (ideal ~{line_bytes // ELEMENT_BYTES}x).")

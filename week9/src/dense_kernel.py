@@ -222,6 +222,8 @@ def main(argv: list[str] | None = None) -> int:
         "statistic": "median",
         "naive_ijk": naive,
         "interchanged_ikj": inter,
+        "naive_time_s": naive["median_s"],
+        "interchanged_time_s": inter["median_s"],
         "speedup": round(speedup, 3),
         "speedup_definition": "S = T_naive / T_interchanged (median wall-clock)",
         "verification": {
