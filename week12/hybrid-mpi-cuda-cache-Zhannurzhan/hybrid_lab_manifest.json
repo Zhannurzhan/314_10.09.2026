@@ -1,0 +1,200 @@
+{
+  "github_username": "Zhannurzhan",
+  "instance_seed_hex": "0xc08ebd9bf16078e4",
+  "identity_digest_sha256": "c08ebd9bf16078e4f015ffcfddbd9d28f5040793dfadd6ee5e1c3f9ab5af903d",
+  "timestamp_utc": "2026-11-19T09:49:37Z",
+  "hardware": {
+    "gpu_name": "Tesla T4",
+    "gpu_uuid": "GPU-17d1c0d8-4410-4b14-18eb-5b662509184e",
+    "cpu_signature": "x86_64::2::Intel(R) Xeon(R) CPU @ 2.00GHz",
+    "cpu_coherency_line_bytes": 64
+  },
+  "software": {
+    "python": "3.13.16",
+    "numpy": "2.4.6",
+    "numba": "0.64.0",
+    "mpi4py": "4.1.2",
+    "mpi_library": "Open MPI v4.1.6, package: Debian OpenMPI, ident: 4.1.6, repo rev: v4.1.6, Sep 30, 2023\u0000"
+  },
+  "mpi": {
+    "world_size": 4,
+    "cart_dims": [
+      2,
+      2
+    ],
+    "periodic": [
+      false,
+      false
+    ],
+    "topology": [
+      {
+        "rank": 0,
+        "coords": [
+          0,
+          0
+        ]
+      },
+      {
+        "rank": 1,
+        "coords": [
+          0,
+          1
+        ]
+      },
+      {
+        "rank": 2,
+        "coords": [
+          1,
+          0
+        ]
+      },
+      {
+        "rank": 3,
+        "coords": [
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  "grid": {
+    "global": [
+      512,
+      512
+    ],
+    "local_interior": [
+      256,
+      256
+    ],
+    "local_padded": [
+      258,
+      258
+    ],
+    "steps": 300
+  },
+  "stability": {
+    "dx": 0.001949317738791423,
+    "kappa_max": 1.4999976560697,
+    "dt": 3.799845584482373e-07,
+    "dt_max": 6.333075974137289e-07,
+    "dt_over_dt_max": 0.6,
+    "lambda_damp": 0.15,
+    "cfl_satisfied": true
+  },
+  "source_center": [
+    0.5335844344275852,
+    0.5650297736219392
+  ],
+  "timing": {
+    "gpu_serialized_ms": 1029.2181499998492,
+    "gpu_overlapped_ms": 1027.9684949997545,
+    "overlap_speedup": 1.001215654960413
+  },
+  "verification": {
+    "max_diff": 0.0,
+    "tolerance": 1e-12,
+    "parity_pass": true,
+    "energy_pass": true
+  },
+  "energy_allreduce": {
+    "serialized": {
+      "0": 0.25000000000000006,
+      "100": 0.24968196489054684,
+      "200": 0.2493645052903247,
+      "300": 0.24904761564192568
+    },
+    "overlapped": {
+      "0": 0.25000000000000006,
+      "100": 0.24968196489054684,
+      "200": 0.2493645052903247,
+      "300": 0.24904761564192568
+    },
+    "relative_diff": {
+      "0": 0.0,
+      "100": 0.0,
+      "200": 0.0,
+      "300": 0.0
+    }
+  },
+  "gpu_coalescing": {
+    "row_stride_bytes": 2064,
+    "useful_bytes_per_strip": 2048,
+    "strided_column_sectors_32B": 256,
+    "strided_column_lines_128B": 256,
+    "strided_column_bytes_moved": 8192,
+    "strided_column_efficiency": 0.25,
+    "contiguous_row_sectors_32B": 65,
+    "contiguous_row_efficiency": 0.9846153846153847,
+    "packed_strip_sectors_32B": 64,
+    "packed_strip_efficiency": 1.0,
+    "pcie_bytes_per_step_packed_each_way": 8192,
+    "pcie_bytes_per_step_full_field_each_way": 532512,
+    "pcie_reduction_factor": 65.00390625
+  },
+  "ptx_audit": {
+    "st.shared.f64": 5,
+    "ld.shared.f64": 5,
+    "bar.sync": 1,
+    "ptx_lines": 562
+  },
+  "llvm_audit": {
+    "load_atomic_monotonic": 9,
+    "store_atomic_monotonic": 9,
+    "monotonic_tokens": 18,
+    "x86_lock_prefixes": 1,
+    "register_hoisting_prevented": true
+  },
+  "shm_benchmark": {
+    "iters_per_rank": 40000000,
+    "window_align_offset_bytes": 56,
+    "strides": {
+      "1": {
+        "stride_slots": 1,
+        "stride_bytes": 8,
+        "elapsed_ms": 579.2625490000205,
+        "ns_per_update": 14.481563725000512,
+        "cpu_line_index_per_rank": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "distinct_64B_lines": 1,
+        "distinct_128B_pairs": 1,
+        "counts_correct": false
+      },
+      "8": {
+        "stride_slots": 8,
+        "stride_bytes": 64,
+        "elapsed_ms": 166.3791750000314,
+        "ns_per_update": 4.159479375000785,
+        "cpu_line_index_per_rank": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "distinct_64B_lines": 4,
+        "distinct_128B_pairs": 3,
+        "counts_correct": false
+      },
+      "16": {
+        "stride_slots": 16,
+        "stride_bytes": 128,
+        "elapsed_ms": 164.88459200002126,
+        "ns_per_update": 4.122114800000531,
+        "cpu_line_index_per_rank": [
+          0,
+          2,
+          4,
+          6
+        ],
+        "distinct_64B_lines": 4,
+        "distinct_128B_pairs": 4,
+        "counts_correct": false
+      }
+    },
+    "false_sharing_slowdown_s1_over_s8": 3.4815808468812945,
+    "prefetch_ratio_s8_over_s16": 1.009064418827018
+  }
+}
