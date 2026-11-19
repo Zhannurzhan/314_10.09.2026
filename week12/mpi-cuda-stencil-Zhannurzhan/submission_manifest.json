@@ -1,0 +1,176 @@
+{
+  "schema_version": "1.0",
+  "GITHUB_USERNAME": "Zhannurzhan",
+  "gpu_name": "Tesla T4",
+  "gpu_uuid": "GPU-92f0ac98-959c-df82-5bac-f58358464141",
+  "compute_capability": "7.5",
+  "instance_seed": 18270785080329506997,
+  "instance_seed_hex": "0xfd8ede3a508c10b5",
+  "mpi_ranks": 4,
+  "cart_dims": [
+    2,
+    2
+  ],
+  "cart_periods": [
+    false,
+    false
+  ],
+  "rank_topology": [
+    {
+      "rank": 0,
+      "coords": [
+        0,
+        0
+      ],
+      "up": -2,
+      "down": 2,
+      "left": -2,
+      "right": 1
+    },
+    {
+      "rank": 1,
+      "coords": [
+        0,
+        1
+      ],
+      "up": -2,
+      "down": 3,
+      "left": 0,
+      "right": -2
+    },
+    {
+      "rank": 2,
+      "coords": [
+        1,
+        0
+      ],
+      "up": 0,
+      "down": -2,
+      "left": -2,
+      "right": 3
+    },
+    {
+      "rank": 3,
+      "coords": [
+        1,
+        1
+      ],
+      "up": 1,
+      "down": -2,
+      "left": 2,
+      "right": -2
+    }
+  ],
+  "proc_null_value": -2,
+  "global_grid": [
+    512,
+    512
+  ],
+  "local_padded_shape": [
+    258,
+    258
+  ],
+  "tile_dim": 16,
+  "shared_tile_dim": 18,
+  "steps": 400,
+  "lambda": 0.15,
+  "dx": 0.001949317738791423,
+  "dy": 0.001949317738791423,
+  "kappa_min": 0.08000091566104017,
+  "kappa_max": 0.23999990389826725,
+  "dt_max_cfl": 3.958167883660494e-06,
+  "dt": 1.979083941830247e-06,
+  "cfl_safety": 0.5,
+  "energy_trace_serialized": [
+    {
+      "step": 0,
+      "energy": 0.10093551112297544,
+      "l2_norm": 0.318566425480295,
+      "residual_l2": null
+    },
+    {
+      "step": 100,
+      "energy": 0.10092842853144524,
+      "l2_norm": 0.3165450491512905,
+      "residual_l2": 15.380956351096641
+    },
+    {
+      "step": 200,
+      "energy": 0.1009223380137232,
+      "l2_norm": 0.31456998993640595,
+      "residual_l2": 15.027643241283881
+    },
+    {
+      "step": 300,
+      "energy": 0.10091642532454304,
+      "l2_norm": 0.3126394128124862,
+      "residual_l2": 14.689638630699505
+    },
+    {
+      "step": 400,
+      "energy": 0.10091058880693848,
+      "l2_norm": 0.310751596603657,
+      "residual_l2": 14.36578589733832
+    }
+  ],
+  "energy_trace_overlapped": [
+    {
+      "step": 0,
+      "energy": 0.10093551112297544,
+      "l2_norm": 0.318566425480295,
+      "residual_l2": null
+    },
+    {
+      "step": 100,
+      "energy": 0.10092842853144524,
+      "l2_norm": 0.3165450491512905,
+      "residual_l2": 15.380956351096641
+    },
+    {
+      "step": 200,
+      "energy": 0.1009223380137232,
+      "l2_norm": 0.31456998993640595,
+      "residual_l2": 15.027643241283881
+    },
+    {
+      "step": 300,
+      "energy": 0.10091642532454304,
+      "l2_norm": 0.3126394128124862,
+      "residual_l2": 14.689638630699505
+    },
+    {
+      "step": 400,
+      "energy": 0.10091058880693848,
+      "l2_norm": 0.310751596603657,
+      "residual_l2": 14.36578589733832
+    }
+  ],
+  "energy_non_increasing": true,
+  "serialized_ms": 1505.30126953125,
+  "overlapped_ms": 2799.7286987304688,
+  "serialized_wall_ms": 1506.0889670000001,
+  "overlapped_wall_ms": 2804.3846000000012,
+  "serialized_mpi_wait_ms": 715.8627179999905,
+  "overlapped_mpi_wait_ms": 1524.276062999987,
+  "overlap_speedup": 0.5376596918886554,
+  "parity_max_diff": 0.0,
+  "parity_passed": true,
+  "ptx_counts": {
+    "st.shared.f64": 10,
+    "ld.shared.f64": 10,
+    "st.shared(any)": 10,
+    "ld.shared(any)": 10,
+    "bar.sync": 1,
+    "barrier.sync": 0
+  },
+  "ptx_audit_passed": true,
+  "tasks_completed": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "solver_source_sha256": "f5675b6f0f16b2099a882db0e6946c63337e2c7bd6f8f8776fe70ef29f11629a",
+  "generated_utc": "2026-11-19T07:04:44.790570+00:00"
+}
